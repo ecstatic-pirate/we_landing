@@ -15,8 +15,8 @@ const nextConfig = {
         hostname: 'assets.mixkit.co',
       },
     ],
+    unoptimized: false,
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/we_landing' : '',
 }
 
 module.exports = nextConfig
