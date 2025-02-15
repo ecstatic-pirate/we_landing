@@ -12,7 +12,7 @@ const illustrations = {
   proposal: "/images/mountain.jpg",
   wedding: "/images/mountain.jpg",
   segovia: "/images/aqueduct.png",
-  udaipur: "/images/udaipur.jpg"
+  udaipur: "/images/ud2.png"
 };
 
 interface StoryEvent {

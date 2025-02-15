@@ -463,7 +463,7 @@ const Page = ({ params: { lang } }: PageProps) => {
               <div className="absolute inset-0 bg-white p-2">
                 <div className="relative w-full h-full overflow-hidden">
                   <Image
-                    src="/images/udaipur.jpg"
+                    src="/images/ud2.png"
                     alt="Udaipur"
                     fill
                     className="object-cover"
