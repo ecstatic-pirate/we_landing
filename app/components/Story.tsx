@@ -11,7 +11,7 @@ const illustrations = {
   tokyo: "/images/mountain.jpg",
   proposal: "/images/mountain.jpg",
   wedding: "/images/mountain.jpg",
-  segovia: "/images/segovia.webp",
+  segovia: "/images/aqueduct.png",
   udaipur: "/images/udaipur.jpg"
 };
 
