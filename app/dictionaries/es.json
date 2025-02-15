@@ -1,0 +1,43 @@
+{
+  "header": {
+    "title": "LA CRÓNICA DE LA BODA",
+    "special_edition": "EDICIÓN ESPECIAL"
+  },
+  "main_article": {
+    "title": "Una Historia de Dos Celebraciones",
+    "content": "En una celebración sin precedentes de amor y cultura, dos bodas extraordinarias se desarrollarán en dos continentes. La primera ceremonia tendrá lugar en la histórica ciudad de Segovia, España, seguida de una gran celebración en la majestuosa ciudad de Udaipur, India."
+  },
+  "dates": {
+    "title": "RESERVA LAS FECHAS",
+    "spanish_wedding": {
+      "title": "Boda Española",
+      "date": "5 de Julio, 2025",
+      "venue": "Finca El Bosque Del Cati, Brieva"
+    },
+    "indian_wedding": {
+      "title": "Boda India",
+      "date": "30-31 de Agosto, 2025",
+      "venue": "Fateh Vilas, Udaipur"
+    }
+  },
+  "timeline": {
+    "title": "Nuestra Historia",
+    "events": [
+      {
+        "date": "Verano 2019",
+        "title": "Primer Encuentro",
+        "description": "Un encuentro casual en las bulliciosas calles de Madrid..."
+      },
+      {
+        "date": "Invierno 2020",
+        "title": "Primera Cita",
+        "description": "Una noche acogedora que se convirtió en una velada inolvidable..."
+      },
+      {
+        "date": "Primavera 2023",
+        "title": "La Propuesta",
+        "description": "Bajo las estrellas en una noche mágica..."
+      }
+    ]
+  }
+} 

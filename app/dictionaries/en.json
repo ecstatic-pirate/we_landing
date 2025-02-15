@@ -1,0 +1,43 @@
+{
+  "header": {
+    "title": "THE WEDDING CHRONICLE",
+    "special_edition": "SPECIAL EDITION"
+  },
+  "main_article": {
+    "title": "A Tale of Two Celebrations",
+    "content": "In an unprecedented celebration of love and culture, two extraordinary weddings are set to unfold across two continents. The first ceremony will take place in the historic city of Segovia, Spain, followed by a grand celebration in the majestic city of Udaipur, India."
+  },
+  "dates": {
+    "title": "SAVE THE DATES",
+    "spanish_wedding": {
+      "title": "Spanish Wedding",
+      "date": "July 5th, 2025",
+      "venue": "Finca El Bosque Del Cati, Brieva"
+    },
+    "indian_wedding": {
+      "title": "Indian Wedding",
+      "date": "August 30-31st, 2025",
+      "venue": "Fateh Vilas, Udaipur"
+    }
+  },
+  "timeline": {
+    "title": "Our Story",
+    "events": [
+      {
+        "date": "Summer 2019",
+        "title": "First Meeting",
+        "description": "A chance encounter in the bustling streets of Madrid..."
+      },
+      {
+        "date": "Winter 2020",
+        "title": "First Date",
+        "description": "A cozy evening that turned into an unforgettable night..."
+      },
+      {
+        "date": "Spring 2023",
+        "title": "The Proposal",
+        "description": "Under the stars in a magical evening..."
+      }
+    ]
+  }
+} 
