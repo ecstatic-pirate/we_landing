@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import ConceptNavigation from '../components/ConceptNavigation';
-import AudioPlayer from '../components/AudioPlayer';
 import WeddingProgram from '../components/WeddingProgram';
 import { ProgramEvent } from '../components/WeddingProgram';
 import FallingElements from '../components/FallingElements';
+import SectionAudio from '../components/SectionAudio';
 
 interface PageProps {
   params: {
@@ -332,7 +332,6 @@ const Page = ({ params: { lang } }: PageProps) => {
       <div className="fixed top-4 left-0 right-0 z-50 flex justify-center">
         <ConceptNavigation />
       </div>
-      <AudioPlayer />
       
       {/* Hero Section */}
       <div className="h-screen relative flex flex-col items-center">
@@ -392,26 +391,27 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* Spanish Wedding Section */}
-      <section id="spanish" className="min-h-screen py-20 relative">
+      <section id="spanish" className="min-h-screen py-12 relative">
         <FallingElements type="rice" />
+        <SectionAudio section="spanish" />
         <div className="relative z-10 max-w-6xl mx-auto px-4">
           <motion.article 
-            className="text-center max-w-4xl mx-auto mb-16"
+            className="text-center max-w-4xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <header className="space-y-3 mb-8">
-              <div className="flex items-center justify-center gap-2 text-amber-600">
+            <header className="space-y-1 mb-3">
+              <div className="flex items-center justify-center gap-1 text-amber-600">
                 <MapPin size={14} />
                 <span className="font-mono text-xs sm:text-sm">{t.spanish.coordinates}</span>
               </div>
-              <h2 className="font-playfair text-2xl md:text-3xl text-amber-900">{t.spanish.title}</h2>
+              <h2 className="font-playfair text-2xl md:text-3xl text-amber-900 leading-tight">{t.spanish.title}</h2>
               <p className="font-mono text-xs sm:text-sm text-amber-700">JULY 4-5, 2025</p>
             </header>
 
-            <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
-              <div className="absolute inset-0 bg-white p-2">
+            <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-3">
+              <div className="absolute inset-0">
                 <div className="relative w-full h-full overflow-hidden">
                   <Image
                     src="/images/aqueduct.png"
@@ -424,7 +424,7 @@ const Page = ({ params: { lang } }: PageProps) => {
               </div>
             </div>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto mb-8">
               <p className="font-lora text-base md:text-lg leading-relaxed text-amber-800">
                 {t.spanish.description}
               </p>
@@ -441,26 +441,27 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* Indian Wedding Section */}
-      <section id="indian" className="min-h-screen py-20 bg-stone-50 relative">
+      <section id="indian" className="min-h-screen py-12 bg-stone-50 relative">
         <FallingElements type="marigold" />
+        <SectionAudio section="indian" />
         <div className="relative z-10 max-w-6xl mx-auto px-4">
           <motion.article 
-            className="text-center max-w-4xl mx-auto mb-16"
+            className="text-center max-w-4xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <header className="space-y-3 mb-8">
-              <div className="flex items-center justify-center gap-2 text-fuchsia-600">
+            <header className="space-y-1 mb-3">
+              <div className="flex items-center justify-center gap-1 text-fuchsia-600">
                 <MapPin size={14} />
                 <span className="font-mono text-xs sm:text-sm">{t.indian.coordinates}</span>
               </div>
-              <h2 className="font-playfair text-2xl md:text-3xl text-fuchsia-900">{t.indian.title}</h2>
+              <h2 className="font-playfair text-2xl md:text-3xl text-fuchsia-900 leading-tight">{t.indian.title}</h2>
               <p className="font-mono text-xs sm:text-sm text-fuchsia-700">AUGUST 30-31, 2025</p>
             </header>
 
-            <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
-              <div className="absolute inset-0 bg-white p-2">
+            <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-3">
+              <div className="absolute inset-0">
                 <div className="relative w-full h-full overflow-hidden">
                   <Image
                     src="/images/ud2.png"
@@ -473,7 +474,7 @@ const Page = ({ params: { lang } }: PageProps) => {
               </div>
             </div>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto mb-8">
               <p className="font-lora text-base md:text-lg leading-relaxed text-fuchsia-800">
                 {t.indian.description}
               </p>

@@ -1,15 +1,13 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface FallingElementsProps {
   type: 'rice' | 'marigold';
 }
 
 const FallingElements = ({ type }: FallingElementsProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.1 });
   const [elements, setElements] = useState<Array<{
     id: number;
     x: number;
@@ -22,24 +20,21 @@ const FallingElements = ({ type }: FallingElementsProps) => {
 
   useEffect(() => {
     // Create elements with more random properties
-    const newElements = Array.from({ length: 75 }, (_, index) => ({
+    const newElements = Array.from({ length: type === 'rice' ? 200 : 100 }, (_, index) => ({
       id: index,
       x: Math.random() * 100,
-      delay: Math.random() * 10,
-      duration: 8 + Math.random() * 7,
+      delay: Math.random() * 5,
+      duration: 6 + Math.random() * 5,
       rotation: Math.random() * 360,
-      scale: 0.8 + Math.random() * 0.4,
+      scale: type === 'rice' ? 0.5 + Math.random() * 0.2 : 0.3 + Math.random() * 0.2,
       swayAmount: Math.random() * 100,
     }));
     setElements(newElements);
-  }, []);
-
-  if (!isInView) return null;
+  }, [type]);
 
   return (
     <div 
-      ref={containerRef} 
-      className="absolute inset-0 w-full h-full z-0"
+      className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
       style={{ minHeight: '100vh' }}
     >
       {elements.map((element) => (
@@ -48,7 +43,7 @@ const FallingElements = ({ type }: FallingElementsProps) => {
           className="absolute"
           style={{ 
             left: `${element.x}%`,
-            top: 0,
+            top: -20,
             scale: element.scale,
             zIndex: 0,
           }}
@@ -67,44 +62,75 @@ const FallingElements = ({ type }: FallingElementsProps) => {
           }}
         >
           {type === 'rice' ? (
-            // Rice grain
-            <div 
-              className="h-4 w-1.5 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full shadow-sm"
-              style={{
-                transform: 'rotate(45deg)',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
-              }}
-            />
-          ) : (
-            // Marigold flower
+            // Rice grain - more realistic with curved shape and gradient
             <div className="relative">
-              {[...Array(12)].map((_, i) => (
+              <div 
+                className="h-3 w-[3px] rounded-full"
+                style={{
+                  background: 'linear-gradient(90deg, #FFF8E1 0%, #FFECB3 50%, #FFE082 100%)',
+                  transform: 'rotate(45deg)',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                  position: 'relative',
+                }}
+              >
+                <div 
+                  className="absolute w-full h-full"
+                  style={{
+                    background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%)',
+                    transform: 'rotate(-45deg)',
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            // Marigold flower - more realistic with multiple layers and better colors
+            <div className="relative">
+              {/* Outer petals */}
+              {[...Array(16)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute"
                   style={{
-                    width: `${6 + Math.random() * 2}px`,
-                    height: `${6 + Math.random() * 2}px`,
-                    background: `rgb(255, ${150 + Math.random() * 50}, 0)`,
-                    borderRadius: '50%',
+                    width: '8px',
+                    height: '3px',
+                    background: `linear-gradient(to right, rgb(255, ${120 + Math.random() * 30}, 0), rgb(255, ${180 + Math.random() * 20}, 0))`,
+                    borderRadius: '40% 60% 50% 50%',
                     transform: `
-                      rotate(${i * 30}deg) 
-                      translate(${4 + Math.random()}px, 0)
-                      scale(${0.9 + Math.random() * 0.2})
+                      rotate(${i * (360 / 16)}deg) 
+                      translateX(4px)
                     `,
-                    opacity: 0.8 + Math.random() * 0.2,
-                  }}
-                  animate={{
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 20 + Math.random() * 10,
-                    repeat: Infinity,
-                    ease: "linear"
+                    transformOrigin: '0 50%',
+                    opacity: 0.9,
                   }}
                 />
               ))}
-              <div className="w-3 h-3 bg-orange-600 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+              {/* Inner petals */}
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={`inner-${i}`}
+                  className="absolute"
+                  style={{
+                    width: '6px',
+                    height: '2.5px',
+                    background: `linear-gradient(to right, rgb(255, ${150 + Math.random() * 30}, 0), rgb(255, ${200 + Math.random() * 20}, 0))`,
+                    borderRadius: '40% 60% 50% 50%',
+                    transform: `
+                      rotate(${i * (360 / 12)}deg) 
+                      translateX(3px)
+                    `,
+                    transformOrigin: '0 50%',
+                    opacity: 0.95,
+                  }}
+                />
+              ))}
+              {/* Center */}
+              <div 
+                className="w-2 h-2 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  background: 'radial-gradient(circle, rgb(255, 140, 0) 0%, rgb(255, 120, 0) 100%)',
+                  boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)',
+                }}
+              />
             </div>
           )}
         </motion.div>
