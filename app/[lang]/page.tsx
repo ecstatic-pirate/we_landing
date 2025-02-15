@@ -413,34 +413,13 @@ const Page = ({ params: { lang } }: PageProps) => {
             <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
               <div className="absolute inset-0 bg-white p-2">
                 <div className="relative w-full h-full overflow-hidden">
-                  <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                    <defs>
-                      <mask id="torn-edge-mask-spanish">
-                        <rect x="1" y="1" width="98" height="98" fill="white" />
-                        <path
-                          d="M0,0 L2,1 L98,1 L100,0 L100,100 L98,99 L2,99 L0,100 Z"
-                          fill="white"
-                          filter="url(#noise)"
-                        />
-                      </mask>
-                      <filter id="noise">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="1" />
-                        <feDisplacementMap in="SourceGraphic" scale="0.7" />
-                      </filter>
-                    </defs>
-                  </svg>
-                  <div className="relative w-full h-full" style={{ mask: 'url(#torn-edge-mask-spanish)', WebkitMask: 'url(#torn-edge-mask-spanish)' }}>
-                    <Image
-                      src="/images/segovia.webp"
-                      alt="Segovia"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 66vw"
-                    />
-                  </div>
-                  <div className="absolute top-4 right-4 w-16 h-16 border border-white/20 rounded-full flex items-center justify-center rotate-12 bg-black/10 backdrop-blur-sm">
-                    <span className="font-mono text-[10px] text-white">SPAIN 2025</span>
-                  </div>
+                  <Image
+                    src="/images/aqueduct.png"
+                    alt="Segovia Aqueduct"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 66vw"
+                  />
                 </div>
               </div>
             </div>
@@ -483,30 +462,13 @@ const Page = ({ params: { lang } }: PageProps) => {
             <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
               <div className="absolute inset-0 bg-white p-2">
                 <div className="relative w-full h-full overflow-hidden">
-                  <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                    <defs>
-                      <mask id="torn-edge-mask-indian">
-                        <rect x="1" y="1" width="98" height="98" fill="white" />
-                        <path
-                          d="M0,0 L2,1 L98,1 L100,0 L100,100 L98,99 L2,99 L0,100 Z"
-                          fill="white"
-                          filter="url(#noise)"
-                        />
-                      </mask>
-                    </defs>
-                  </svg>
-                  <div className="relative w-full h-full" style={{ mask: 'url(#torn-edge-mask-indian)', WebkitMask: 'url(#torn-edge-mask-indian)' }}>
-                    <Image
-                      src="/images/udaipur.jpg"
-                      alt="Udaipur"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 66vw"
-                    />
-                  </div>
-                  <div className="absolute top-4 right-4 w-16 h-16 border border-white/20 rounded-full flex items-center justify-center -rotate-12 bg-black/10 backdrop-blur-sm">
-                    <span className="font-mono text-[10px] text-white">INDIA 2025</span>
-                  </div>
+                  <Image
+                    src="/images/udaipur.jpg"
+                    alt="Udaipur"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 66vw"
+                  />
                 </div>
               </div>
             </div>
