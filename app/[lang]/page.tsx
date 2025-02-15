@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import ConceptNavigation from '../components/ConceptNavigation';
-import LanguageSwitcher from '../components/LanguageSwitcher';
 import AudioPlayer from '../components/AudioPlayer';
 import WeddingProgram from '../components/WeddingProgram';
 import { ProgramEvent } from '../components/WeddingProgram';
@@ -330,12 +329,8 @@ const Page = ({ params: { lang } }: PageProps) => {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="fixed top-4 left-0 right-0 z-50 flex justify-between items-center px-4">
-        <div className="flex-1" /> {/* Spacer */}
+      <div className="fixed top-4 left-0 right-0 z-50 flex justify-center">
         <ConceptNavigation />
-        <div className="flex-1 flex justify-end">
-          <LanguageSwitcher />
-        </div>
       </div>
       <AudioPlayer />
       
@@ -416,32 +411,21 @@ const Page = ({ params: { lang } }: PageProps) => {
             </header>
 
             <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
-              <div className="absolute inset-0 bg-white p-4">
+              <div className="absolute inset-0 bg-white p-2">
                 <div className="relative w-full h-full overflow-hidden">
                   <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
                     <defs>
                       <mask id="torn-edge-mask-spanish">
+                        <rect x="1" y="1" width="98" height="98" fill="white" />
                         <path
-                          d="M0,0 L100,0 L98,98 L2,100 L0,0"
+                          d="M0,0 L2,1 L98,1 L100,0 L100,100 L98,99 L2,99 L0,100 Z"
                           fill="white"
-                          transform="scale(1.02)"
                           filter="url(#noise)"
-                        >
-                          <animate
-                            attributeName="d"
-                            dur="8s"
-                            repeatCount="indefinite"
-                            values="
-                              M0,0 L100,0 L98,98 L2,100 L0,0;
-                              M0,0 L100,0 L96,96 L4,100 L0,0;
-                              M0,0 L100,0 L98,98 L2,100 L0,0
-                            "
-                          />
-                        </path>
+                        />
                       </mask>
                       <filter id="noise">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" />
-                        <feDisplacementMap in="SourceGraphic" scale="3" />
+                        <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="1" />
+                        <feDisplacementMap in="SourceGraphic" scale="0.7" />
                       </filter>
                     </defs>
                   </svg>
@@ -451,6 +435,7 @@ const Page = ({ params: { lang } }: PageProps) => {
                       alt="Segovia"
                       fill
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 66vw"
                     />
                   </div>
                   <div className="absolute top-4 right-4 w-16 h-16 border border-white/20 rounded-full flex items-center justify-center rotate-12 bg-black/10 backdrop-blur-sm">
@@ -496,28 +481,17 @@ const Page = ({ params: { lang } }: PageProps) => {
             </header>
 
             <div className="relative max-w-3xl mx-auto aspect-[16/9] mb-8">
-              <div className="absolute inset-0 bg-white p-4">
+              <div className="absolute inset-0 bg-white p-2">
                 <div className="relative w-full h-full overflow-hidden">
                   <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
                     <defs>
                       <mask id="torn-edge-mask-indian">
+                        <rect x="1" y="1" width="98" height="98" fill="white" />
                         <path
-                          d="M2,0 L98,0 L100,100 L0,98 L2,0"
+                          d="M0,0 L2,1 L98,1 L100,0 L100,100 L98,99 L2,99 L0,100 Z"
                           fill="white"
-                          transform="scale(1.02)"
                           filter="url(#noise)"
-                        >
-                          <animate
-                            attributeName="d"
-                            dur="8s"
-                            repeatCount="indefinite"
-                            values="
-                              M2,0 L98,0 L100,100 L0,98 L2,0;
-                              M4,0 L96,0 L100,96 L0,94 L4,0;
-                              M2,0 L98,0 L100,100 L0,98 L2,0
-                            "
-                          />
-                        </path>
+                        />
                       </mask>
                     </defs>
                   </svg>
@@ -527,6 +501,7 @@ const Page = ({ params: { lang } }: PageProps) => {
                       alt="Udaipur"
                       fill
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 66vw"
                     />
                   </div>
                   <div className="absolute top-4 right-4 w-16 h-16 border border-white/20 rounded-full flex items-center justify-center -rotate-12 bg-black/10 backdrop-blur-sm">

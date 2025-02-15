@@ -95,7 +95,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
                   <div className={`space-y-3 ${isLeft ? 'pr-8' : 'pl-8'}`}>
                     <p className={`font-mono text-sm ${colors.time}`}>{event.time}</p>
                     <h4 className={`font-playfair text-xl ${colors.title}`}>{event.title[lang]}</h4>
-                    <p className={`font-lora text-sm italic ${colors.description[lang]}`}>{event.description[lang]}</p>
+                    <p className={`font-lora text-sm italic ${colors.description}`}>{event.description[lang]}</p>
                   </div>
                 </div>
 
