@@ -21,6 +21,7 @@
     "next-i18next": "^15.4.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.4.0",
     "react-intersection-observer": "^9.15.1",
     "react-youtube": "^10.1.0",
     "sharp": "^0.33.5",

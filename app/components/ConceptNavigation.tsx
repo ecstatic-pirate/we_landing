@@ -38,7 +38,14 @@ const sections = [
     id: 'rsvp',
     name: {
       en: 'RSVP',
-      es: 'RSVP'
+      es: 'Formulario'
+    }
+  },
+  {
+    id: 'details',
+    name: {
+      en: 'Contact',
+      es: 'Contacto'
     }
   }
 ];

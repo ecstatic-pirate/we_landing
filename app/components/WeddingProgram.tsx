@@ -19,16 +19,27 @@ import {
   IconWeight,
   Champagne,
   DoorOpen,
-  FireSimple,
-  Microphone,
   Users,
-  PaintBrush,
-  Bandaids,
-  Horse
+  Palette,
+  Horse,
+  Sparkle,
+  Hand,
+  House,
+  Microphone,
+  FlowerLotus
 } from "@phosphor-icons/react";
 
+// Import Indian ceremony specific icons
+import { GiFlowerPot, GiIndianPalace, GiPeaceDove, GiSunflower, GiDrum } from 'react-icons/gi';
+import { FaPrayingHands, FaHandsWash } from 'react-icons/fa';
+import { SiYamahamotorcorporation } from 'react-icons/si';
+import { IoMusicalNotes } from 'react-icons/io5';
+
 export interface ProgramEvent {
-  time: string;
+  time: {
+    en: string;
+    es: string;
+  };
   title: {
     en: string;
     es: string;
@@ -47,7 +58,7 @@ interface WeddingProgramProps {
   lang?: 'en' | 'es';
 }
 
-const getIcon = (iconName: string, color: string) => {
+const getIcon = (iconName: string, color: string, theme: 'spanish' | 'indian') => {
   const iconProps: IconProps = { 
     size: 32,
     color: color,
@@ -57,11 +68,11 @@ const getIcon = (iconName: string, color: string) => {
   switch (iconName) {
     // Ceremony related
     case 'ceremony':
-      return <DiamondsFour {...iconProps} />; // Main wedding ceremony
+      return theme === 'indian' ? <House {...iconProps} /> : <DiamondsFour {...iconProps} />; // Main wedding ceremony
     case 'civil':
       return <Church {...iconProps} />; // Civil ceremony
     case 'ritual':
-      return <FireSimple {...iconProps} />; // Indian rituals like Haldi, Ganesh Puja
+      return <FlowerLotus {...iconProps} />; // Indian rituals like Haldi, Ganesh Puja
       
     // Food and drinks related
     case 'dinner':
@@ -77,7 +88,7 @@ const getIcon = (iconName: string, color: string) => {
     case 'music':
       return <MusicNotes {...iconProps} />; // Live band & first dance
     case 'garba':
-      return <Users {...iconProps} />; // Garba dance (group dance)
+      return <HandsClapping {...iconProps} />; // Garba dance (group dance)
     case 'sangeet':
       return <Microphone {...iconProps} />; // Sangeet performances
     case 'baraat':
@@ -95,42 +106,44 @@ const getIcon = (iconName: string, color: string) => {
       
     // Decoration and preparation
     case 'decoration':
-      return <PaintBrush {...iconProps} />; // Mehndi and decoration events
+      return <Palette {...iconProps} />; // Mehndi and decoration events
     case 'welcome':
       return <DoorOpen {...iconProps} />; // Welcome events
     case 'gathering':
       return <Users {...iconProps} />; // Group events
+    case 'haldi':
+      return <Hand {...iconProps} />; // Haldi ceremony
       
     // Default and special cases
     case 'love':
       return <Heart {...iconProps} />;
     default:
-      return <Flower {...iconProps} />;
+      return <Sparkle {...iconProps} />;
   }
 };
 
 const themeColors = {
   spanish: {
-    line: 'bg-amber-200',
+    line: 'bg-black/20',
     icon: {
-      bg: 'bg-amber-50',
-      border: 'border-amber-200',
-      text: 'text-amber-500'
+      bg: 'bg-white',
+      border: 'border-black/20',
+      text: 'text-black'
     },
-    time: 'text-amber-600',
-    title: 'text-amber-900',
-    description: 'text-amber-700'
+    time: 'text-black',
+    title: 'text-black',
+    description: 'text-black/80'
   },
   indian: {
-    line: 'bg-fuchsia-200',
+    line: 'bg-black/20',
     icon: {
-      bg: 'bg-fuchsia-50',
-      border: 'border-fuchsia-200',
-      text: 'text-fuchsia-500'
+      bg: 'bg-white',
+      border: 'border-black/20',
+      text: 'text-black'
     },
-    time: 'text-fuchsia-600',
-    title: 'text-fuchsia-900',
-    description: 'text-fuchsia-700'
+    time: 'text-black',
+    title: 'text-black',
+    description: 'text-black/80'
   }
 };
 
@@ -157,7 +170,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
 
             return (
               <motion.div
-                key={event.time}
+                key={event.time.en}
                 className={`flex items-center gap-8 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
                 initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -167,7 +180,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
                 {/* Content */}
                 <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'}`}>
                   <div className={`space-y-3 ${isLeft ? 'pr-8' : 'pl-8'}`}>
-                    <p className={`font-mono text-sm ${colors.time}`}>{event.time}</p>
+                    <p className={`font-mono text-sm ${colors.time}`}>{event.time[lang]}</p>
                     <h4 className={`font-playfair text-xl ${colors.title}`}>{event.title[lang]}</h4>
                     <p className={`font-lora text-sm italic ${colors.description}`}>{event.description[lang]}</p>
                   </div>
@@ -180,7 +193,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    {getIcon(event.icon, colors.icon.text.replace('text-', ''))}
+                    {getIcon(event.icon, colors.icon.text.replace('text-', ''), theme)}
                   </motion.div>
                 </div>
 
