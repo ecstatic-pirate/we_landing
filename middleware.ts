@@ -4,14 +4,11 @@ import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
 let locales = ['en', 'es']
-let defaultLocale = 'en'
+let defaultLocale = 'es'
 
 function getLocale(request: NextRequest): string {
-  const negotiatorHeaders: Record<string, string> = {}
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
-
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
-  return matchLocale(languages, locales, defaultLocale)
+  // Always return Spanish as the default locale
+  return 'es'
 }
 
 export function middleware(request: NextRequest) {

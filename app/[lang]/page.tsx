@@ -420,7 +420,7 @@ const Page = ({ params: { lang } }: PageProps) => {
       }
     },
     es: {
-      title: "Nos Casamos",
+      title: "Nos casamos",
       dates: {
         spanish: "5 de julio 2025, Segovia, España",
         indian: "30-31 de agosto 2025, Udaipur, India"
@@ -624,7 +624,7 @@ const Page = ({ params: { lang } }: PageProps) => {
           >
             <header className="space-y-3 mb-12">
               <h2 className="font-playfair text-3xl md:text-5xl text-black leading-tight">
-                {lang === 'es' ? 'RSVP' : 'RSVP'}
+                {lang === 'es' ? 'Formulario' : 'RSVP'}
               </h2>
               <p className="font-mono text-sm md:text-base text-black">
                 {lang === 'es' ? 'CONFIRMA TU ASISTENCIA' : 'CONFIRM YOUR ATTENDANCE'}

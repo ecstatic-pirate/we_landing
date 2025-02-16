@@ -14,9 +14,20 @@ const lora = Lora({
   variable: '--font-lora',
 })
 
-export const metadata: Metadata = {
-  title: 'Dos Bodas',
-  description: 'A tale of two weddings - Spain and India',
+export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
+  const title = params.lang === 'es' 
+    ? 'Nos casamos | Laura & Shantanu'
+    : 'We Are Getting Married | Laura & Shantanu'
+    
+  const description = params.lang === 'es'
+    ? 'Únete a nuestra celebración de boda en España e India'
+    : 'Join us in celebrating our wedding in Spain and India'
+
+  return {
+    title,
+    description,
+    // Add other metadata properties as needed
+  }
 }
 
 export default function RootLayout({
