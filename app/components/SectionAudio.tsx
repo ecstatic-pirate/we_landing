@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
-
-interface SectionAudioProps {
-  section: 'spanish' | 'indian';
-}
+import { Music } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -14,19 +10,13 @@ declare global {
 
 let apiLoaded = false;
 
-const SectionAudio = ({ section }: SectionAudioProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [hasPlayed, setHasPlayed] = useState(false);
+const SectionAudio = () => {
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const playerRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
-  const isInView = useInView(containerRef, { amount: 0.3 });
 
-  const videoId = section === 'spanish' 
-    ? 'qPU8mENUBXk'  // Spanish music
-    : 'TXuJcO5G6TA'; // Indian music
+  // Indian music track
+  const videoId = 'TXuJcO5G6TA';
 
   useEffect(() => {
     let isMounted = true;
@@ -34,14 +24,8 @@ const SectionAudio = ({ section }: SectionAudioProps) => {
     const initializePlayer = () => {
       if (!isMounted) return;
       
-      console.log('Initializing YouTube player for section:', section);
       try {
-        if (!document.getElementById(`youtube-player-${section}`)) {
-          console.error('Player element not found');
-          return;
-        }
-
-        playerRef.current = new window.YT.Player(`youtube-player-${section}`, {
+        playerRef.current = new window.YT.Player('youtube-player', {
           height: '1',
           width: '1',
           videoId,
@@ -52,88 +36,75 @@ const SectionAudio = ({ section }: SectionAudioProps) => {
             fs: 0,
             rel: 0,
             modestbranding: 1,
-            mute: 0,
             playsinline: 1,
             origin: window.location.origin,
-            enablejsapi: 1
+            enablejsapi: 1,
+            loop: 1,
+            playlist: videoId,
+            mute: 0
           },
           events: {
             onReady: (event: any) => {
               if (!isMounted) return;
-              console.log('YouTube player ready for section:', section);
-              event.target.setVolume(100);
-              event.target.unMute();
+              console.log('Player ready');
               setIsReady(true);
+              try {
+                event.target.playVideo();
+                setIsPlaying(true);
+              } catch (err) {
+                console.error('Error in onReady:', err);
+                setIsPlaying(false);
+              }
             },
             onStateChange: (event: any) => {
               if (!isMounted) return;
-              console.log('Player state changed:', event.data, 'for section:', section);
+              console.log('Player state changed:', event.data);
               
-              // Handle different player states
               switch (event.data) {
                 case window.YT.PlayerState.PLAYING:
+                  console.log('Video is now playing');
                   setIsPlaying(true);
-                  if (!hasPlayed) {
-                    setHasPlayed(true);
-                    // Set timeout to stop after 15 seconds
-                    timeoutRef.current = setTimeout(() => {
-                      if (playerRef.current?.stopVideo) {
-                        console.log('Stopping video after 15s for section:', section);
-                        playerRef.current.stopVideo();
-                      }
-                    }, 15000);
-                  }
                   break;
-                case window.YT.PlayerState.ENDED:
                 case window.YT.PlayerState.PAUSED:
+                case window.YT.PlayerState.ENDED:
+                case window.YT.PlayerState.UNSTARTED:
+                  console.log('Video is now paused/ended/unstarted');
                   setIsPlaying(false);
-                  break;
-                case window.YT.PlayerState.BUFFERING:
-                  // Ensure volume and unmute when buffering
-                  event.target.setVolume(100);
-                  event.target.unMute();
+                  if (event.data === window.YT.PlayerState.UNSTARTED) {
+                    event.target.playVideo();
+                  }
                   break;
               }
             },
-            onError: (error: any) => {
-              if (!isMounted) return;
-              console.error('YouTube player error:', error, 'for section:', section);
-              setError('Unable to load audio');
+            onError: (event: any) => {
+              console.error('YouTube player error:', event.data);
+              setIsPlaying(false);
             }
           }
         });
       } catch (err) {
         console.error('Error initializing YouTube player:', err);
-        if (isMounted) {
-          setError('Unable to initialize audio player');
-        }
+        setIsPlaying(false);
       }
     };
 
-    const loadYouTubeAPI = () => {
-      if (apiLoaded) {
-        initializePlayer();
-        return;
-      }
-
+    if (!apiLoaded) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
 
       window.onYouTubeIframeAPIReady = () => {
+        console.log('YouTube API ready');
         apiLoaded = true;
         initializePlayer();
       };
-    };
-
-    loadYouTubeAPI();
+    } else {
+      initializePlayer();
+    }
 
     return () => {
       isMounted = false;
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
       if (playerRef.current?.destroy) {
         try {
           playerRef.current.destroy();
@@ -142,79 +113,43 @@ const SectionAudio = ({ section }: SectionAudioProps) => {
         }
       }
     };
-  }, [videoId, section, hasPlayed]);
-
-  const playVideo = () => {
-    if (!playerRef.current?.playVideo || !isReady) return;
-    
-    try {
-      playerRef.current.setVolume(100);
-      playerRef.current.unMute();
-      playerRef.current.playVideo();
-      
-      if (!hasPlayed) {
-        timeoutRef.current = setTimeout(() => {
-          if (playerRef.current?.stopVideo) {
-            console.log('Stopping video after 15s for section:', section);
-            playerRef.current.stopVideo();
-          }
-        }, 15000);
-      }
-    } catch (err) {
-      console.error('Error playing video:', err);
-      setError('Unable to play audio');
-    }
-  };
-
-  useEffect(() => {
-    // Start playing when section comes into view (only once)
-    if (isInView && !hasPlayed && isReady && playerRef.current) {
-      console.log('Attempting to play video for section:', section);
-      playVideo();
-    }
-  }, [isInView, hasPlayed, isReady, section]);
+  }, [videoId]);
 
   const toggleMusic = () => {
-    if (!playerRef.current || !isReady) return;
+    if (!playerRef.current || !isReady) {
+      console.log('Player not ready for toggle');
+      return;
+    }
 
-    console.log('Toggling music for section:', section);
+    console.log('Toggling music, current state:', isPlaying);
     try {
       if (isPlaying) {
-        playerRef.current.stopVideo();
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
+        playerRef.current.pauseVideo();
       } else {
-        playVideo();
+        playerRef.current.playVideo();
       }
     } catch (err) {
-      console.error('Error controlling YouTube player:', err);
-      setError('Unable to control audio playback');
+      console.error('Error toggling music:', err);
     }
   };
 
   return (
-    <div ref={containerRef} className="fixed bottom-8 right-8 z-50 max-w-[calc(100vw-2rem)]">
+    <div className="fixed bottom-8 right-8 z-50">
       <div 
-        id={`youtube-player-${section}`} 
+        id="youtube-player" 
         className="absolute"
         style={{ width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }} 
       />
       
       <button
         onClick={toggleMusic}
-        className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg hover:bg-white transition-colors disabled:opacity-50 font-serif text-base whitespace-nowrap"
-        aria-label={isPlaying ? 'Stop music' : 'Play music'}
+        className={`bg-neutral-600/90 backdrop-blur-sm px-4 py-2 rounded-full text-white hover:bg-neutral-500/90 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all duration-300 ease-in-out disabled:opacity-50 font-mono text-xs tracking-wider whitespace-nowrap flex items-center gap-2 ${!isReady ? 'animate-pulse' : ''}`}
+        aria-label={isPlaying ? 'Pause music' : 'Play music'}
         disabled={!isReady}
       >
-        {isPlaying ? 'Pause' : 'Play'}
+        <Music className={`w-4 h-4 ${!isPlaying && isReady ? 'animate-bounce' : ''}`} />
+        {isPlaying ? 'PAUSE' : 'PLAY'}
       </button>
-
-      {error && (
-        <div className="absolute bottom-16 right-0 bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm max-w-[200px] break-words">
-          {error}
-        </div>
-      )}
     </div>
   );
 };
