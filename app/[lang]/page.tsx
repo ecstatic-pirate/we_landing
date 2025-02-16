@@ -335,7 +335,7 @@ const Page = ({ params: { lang } }: PageProps) => {
       </div>
       
       {/* Hero Section - added overflow-hidden */}
-      <section className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black overflow-hidden">
+      <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black overflow-hidden">
         {/* Background Image Container */}
         <div className="absolute inset-0">
           <Image
@@ -372,7 +372,7 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* Story Section */}
-      <section className="w-full bg-white py-16 md:py-24">
+      <section id="story" className="w-full bg-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="font-serif text-3xl md:text-5xl text-center mb-12">{lang === 'es' ? 'Nuestra Historia' : 'Our Story'}</h2>
           {/* Story content */}
@@ -484,19 +484,35 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* RSVP Section */}
-      <section id="rsvp" className="w-full min-h-screen py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div
+      <section id="rsvp" className="w-full min-h-screen py-12 bg-white relative overflow-hidden">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 w-full">
+          <motion.article 
+            className="text-center max-w-4xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
           >
-            <h2 className="font-playfair text-5xl">RSVP</h2>
-            <p className="font-lora text-xl">
-              [RSVP form or content here]
-            </p>
-          </motion.div>
+            <header className="space-y-3 mb-12">
+              <h2 className="font-playfair text-3xl md:text-5xl text-neutral-800 leading-tight">RSVP</h2>
+              <p className="font-mono text-sm md:text-base text-neutral-600">
+                {lang === 'es' ? 'CONFIRMA TU ASISTENCIA' : 'CONFIRM YOUR ATTENDANCE'}
+              </p>
+            </header>
+
+            <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-white border border-neutral-200">
+              <div className="p-1 bg-gradient-to-b from-neutral-50/50 to-white">
+                <iframe 
+                  src="https://app.youform.com/forms/qet2ivzx" 
+                  loading="lazy" 
+                  width="100%" 
+                  height="700" 
+                  frameBorder="0" 
+                  className="w-full rounded-xl"
+                  title="RSVP Form"
+                />
+              </div>
+            </div>
+          </motion.article>
         </div>
       </section>
     </main>

@@ -7,6 +7,13 @@ import { Menu, X } from 'lucide-react';
 
 const sections = [
   {
+    id: 'hero',
+    name: {
+      en: 'Start',
+      es: 'Inicio'
+    }
+  },
+  {
     id: 'story',
     name: {
       en: 'Our Story',
