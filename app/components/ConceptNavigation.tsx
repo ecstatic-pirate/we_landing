@@ -50,12 +50,12 @@ export default function ConceptNavigation() {
   };
 
   return (
-    <nav className="fixed top-4 left-0 right-0 z-50">
+    <nav className="w-full flex justify-center px-4 pt-6">
       {/* Desktop Navigation */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block w-full max-w-screen-xl mx-auto">
         <div className="flex justify-center space-x-4">
           <div className="inline-flex bg-neutral-600/90 backdrop-blur-sm rounded-full">
-            <ul className="flex items-center px-4 py-1.5">
+            <ul className="flex items-center px-4 py-2">
               {sections.map((section, index) => (
                 <li key={section.id} className="flex items-center">
                   <button
@@ -94,7 +94,7 @@ export default function ConceptNavigation() {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="sm:hidden px-4">
+      <div className="sm:hidden w-full px-4 max-w-screen-xl">
         <div className="flex justify-between items-center">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -124,40 +124,32 @@ export default function ConceptNavigation() {
         </div>
 
         {/* Mobile Menu Overlay */}
-        <div 
-          className={`${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} 
-          fixed inset-0 bg-neutral-600/90 backdrop-blur-sm transition-opacity duration-300 mt-4`}
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <div className="p-2">
-            <div className="bg-neutral-600/90 backdrop-blur-sm rounded-2xl overflow-hidden relative">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsMenuOpen(false);
-                }}
-                className="absolute top-2 right-2 p-2 text-white/90 hover:text-white rounded-full hover:bg-white/10"
-              >
-                <X size={18} />
-              </button>
-              <ul className="flex flex-col text-xs font-mono tracking-wider divide-y divide-white/10 pt-4">
-                {sections.map((section) => (
-                  <li key={section.id}>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        scrollToSection(section.id);
-                      }}
-                      className="w-full text-left text-white/90 hover:text-white py-2 px-2 hover:bg-white/10 transition-colors"
-                    >
-                      {section.name[lang as keyof typeof section.name].toUpperCase()}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+        {isMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-neutral-600/90 backdrop-blur-sm z-50"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <div className="p-4">
+              <div className="bg-neutral-600/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+                <ul className="flex flex-col text-xs font-mono tracking-wider divide-y divide-white/10">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollToSection(section.id);
+                        }}
+                        className="w-full text-left px-6 py-4 text-white/90 hover:text-white hover:bg-white/10"
+                      >
+                        {section.name[lang as keyof typeof section.name].toUpperCase()}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

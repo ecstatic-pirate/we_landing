@@ -128,114 +128,60 @@ const BackgroundMusic = () => {
 };
 
 const StoryEvent: React.FC<{ event: StoryEvent; index: number }> = ({ event, index }) => {
-  const elementRef = React.useRef<HTMLDivElement>(null);
   const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
+    threshold: 0.1,
+    triggerOnce: true
   });
-
-  const { scrollYProgress } = useScroll({
-    target: elementRef,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  React.useEffect(() => {
-    if (elementRef.current) {
-      ref(elementRef.current);
-    }
-  }, [ref]);
 
   return (
     <motion.div
-      ref={elementRef}
-      className="relative py-12 md:py-16 flex items-center justify-center overflow-hidden"
+      ref={ref}
+      className="relative w-full max-w-full overflow-hidden px-4 md:px-8 py-12 md:py-24"
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: 0.2 }}
     >
-      <motion.div
-        className="absolute inset-0 bg-[#f4f1ea]"
-        style={{ 
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E\")",
-          backgroundRepeat: "repeat"
-        }}
-      />
-      
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4">
-        <motion.div 
-          style={{ opacity }} 
-          className="bg-white/95 backdrop-blur-sm p-6 md:p-8 rounded-sm shadow-xl border border-gray-200"
-        >
-          {/* Newspaper Header */}
-          <div className="text-center border-b border-black pb-4 mb-6">
-            <p className="font-lora text-xs sm:text-sm uppercase tracking-widest mb-2">Vol. 1 • No. {index + 1}</p>
-            <h2 className="font-playfair text-2xl sm:text-3xl md:text-4xl mb-3">{event.title}</h2>
-            <div className="flex items-center justify-center gap-3 text-gray-600 text-xs sm:text-sm">
-              <span>{event.date}</span>
-              <span>•</span>
+      <div className="relative max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+          <div className="w-full md:w-1/2 space-y-4">
+            <motion.div
+              className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-xl"
+              style={{
+                maxWidth: '100%'
+              }}
+            >
+              <Image
+                src={event.illustration}
+                alt={event.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+          </div>
+          
+          <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+            <div className="space-y-2">
+              <h3 className="text-2xl md:text-3xl font-playfair font-bold">{event.title}</h3>
+              <p className="text-gray-600 flex items-center justify-center md:justify-start gap-2">
+                <Calendar className="w-4 h-4" />
+                {event.date}
+              </p>
               {event.location && (
-                <span className="flex items-center gap-1">
-                  <MapPin size={12} />
+                <p className="text-gray-600 flex items-center justify-center md:justify-start gap-2">
+                  <MapPin className="w-4 h-4" />
                   {event.location}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-            {/* Left Column */}
-            <div className="md:col-span-8">
-              <div className="relative aspect-[4/3] md:aspect-[16/9] mb-4 overflow-hidden">
-                <Image
-                  src={event.illustration}
-                  alt={event.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 66vw"
-                />
-              </div>
-              
-              <div className="space-y-4">
-                <p className="font-lora text-base md:text-lg leading-relaxed first-letter:text-4xl first-letter:font-bold first-letter:mr-1 first-letter:float-left">
-                  {event.description}
                 </p>
-                
-                {event.quote && (
-                  <blockquote className="font-playfair text-xl italic text-gray-700 my-4 px-6 border-l-2 border-gray-300">
-                    {event.quote}
-                  </blockquote>
-                )}
-              </div>
-            </div>
-
-            {/* Right Column - Sidebar */}
-            <div className="md:col-span-4 space-y-4">
-              {event.weather && (
-                <div className="bg-gray-50 p-4 border border-gray-200">
-                  <h4 className="font-playfair text-lg mb-2 border-b border-gray-300 pb-2">Weather Report</h4>
-                  <p className="font-lora text-sm leading-relaxed">{event.weather}</p>
-                </div>
               )}
-              
-              <div className="bg-gray-50 p-4 border border-gray-200">
-                <h4 className="font-playfair text-lg mb-2 border-b border-gray-300 pb-2">At a Glance</h4>
-                <ul className="font-lora text-sm space-y-2">
-                  <li className="flex items-center gap-2">
-                    <Calendar size={12} />
-                    <span>{event.date}</span>
-                  </li>
-                  {event.location && (
-                    <li className="flex items-center gap-2">
-                      <MapPin size={12} />
-                      <span>{event.location}</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
             </div>
+            
+            <p className="text-gray-700 leading-relaxed">{event.description}</p>
+            
+            {event.quote && (
+              <p className="italic text-gray-600">{event.quote}</p>
+            )}
           </div>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

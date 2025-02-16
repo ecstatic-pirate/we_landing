@@ -9,13 +9,48 @@
   --background-rgb: 255, 255, 255;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  font-family: 'Lora', serif;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  #__next {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  section {
+    width: 100%;
+    overflow-x: hidden;
+  }
 }
 
+/* Responsive text utilities */
 @layer utilities {
+  .text-responsive {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+  
+  .heading-responsive {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  
   .shadow-glow {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5),
                 0 0 30px rgba(255, 255, 255, 0.3),
@@ -23,6 +58,7 @@ body {
   }
 }
 
+/* Vintage border effect */
 .vintage-border {
   @apply border border-gray-300;
   position: relative;
@@ -35,4 +71,39 @@ body {
   inset: -2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   pointer-events: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .newspaper-container {
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  
+  section {
+    width: 100%;
+    overflow-x: hidden;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3 {
+    word-wrap: break-word;
+    hyphens: auto;
+  }
 } 

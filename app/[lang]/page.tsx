@@ -7,7 +7,7 @@ import ConceptNavigation from '../components/ConceptNavigation';
 import WeddingProgram from '../components/WeddingProgram';
 import { ProgramEvent } from '../components/WeddingProgram';
 import FallingElements from '../components/FallingElements';
-import SectionAudio from '../components/SectionAudio';
+// import SectionAudio from '../components/SectionAudio';
 
 interface PageProps {
   params: {
@@ -328,73 +328,64 @@ const Page = ({ params: { lang } }: PageProps) => {
   const t = translations[lang as keyof typeof translations];
 
   return (
-    <main className="min-h-screen bg-white">
-      <div className="fixed top-4 left-0 right-0 z-50 flex justify-center">
+    <main className="relative w-full overflow-hidden">
+      {/* Navigation Container - adjusted z-index */}
+      <div className="fixed top-0 left-0 right-0 z-40 w-full">
         <ConceptNavigation />
       </div>
       
-      {/* Hero Section */}
-      <div className="h-screen relative flex flex-col items-center">
-        {/* Hero Image */}
+      {/* Hero Section - added overflow-hidden */}
+      <section className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black overflow-hidden">
+        {/* Background Image Container */}
         <div className="absolute inset-0">
           <Image
             src="/images/mountain.jpg"
-            alt="Mountain landscape representing our journey"
+            alt="Wedding background"
             fill
-            className="object-cover object-[center_15%]"
+            sizes="100%"
+            className="object-cover  object-[center_15%] brightness-50"
             priority
           />
-          <div className="absolute inset-0 bg-black/10" />
         </div>
 
-        {/* Content Overlay */}
-        <motion.div 
-          className="relative z-10 max-w-7xl mx-auto text-center px-4 mt-[20vh]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2 }}
-        >
-          <h1 className="font-playfair text-5xl md:text-[90px] text-white leading-none tracking-wide drop-shadow-2xl whitespace-nowrap">
-            {t.title}
-          </h1>
-          <motion.div 
-            className="mt-16 space-y-2"
+        {/* Content Container - adjusted max-width and padding */}
+        <div className="relative z-30 w-full max-w-7xl mx-auto px-4 text-center" style={{ marginTop: '-25vh' }}>
+          <motion.h1 
+            className="font-serif text-4xl md:text-7xl lg:text-8xl text-white mb-8 break-words"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-          >
-            <p className="font-mono text-sm md:text-base text-white/90 tracking-[0.15em] drop-shadow-lg whitespace-nowrap">
-              {t.dates.spanish}
-            </p>
-            <p className="font-mono text-sm md:text-base text-white/90 tracking-[0.15em] drop-shadow-lg whitespace-nowrap">
-              {t.dates.indian}
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Our Story Section */}
-      <section id="story" className="min-h-screen py-20 bg-stone-50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
           >
-            <h2 className="font-playfair text-5xl">Our Story</h2>
-            <p className="font-lora text-xl leading-relaxed">
-              [Your story content here]
-            </p>
+            {t.title}
+          </motion.h1>
+          
+          <motion.div 
+            className="text-white space-y-2 md:space-y-4 text-sm md:text-base"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <p className="font-mono tracking-[0.15em] text-white/90">{t.dates.spanish}</p>
+            <p className="font-mono tracking-[0.15em] text-white/90">{t.dates.indian}</p>
           </motion.div>
         </div>
       </section>
 
+      {/* Story Section */}
+      <section className="w-full bg-white py-16 md:py-24">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="font-serif text-3xl md:text-5xl text-center mb-12">{lang === 'es' ? 'Nuestra Historia' : 'Our Story'}</h2>
+          {/* Story content */}
+        </div>
+      </section>
+
       {/* Spanish Wedding Section */}
-      <section id="spanish" className="min-h-screen py-12 relative">
-        <FallingElements type="rice" />
-        <SectionAudio section="spanish" />
-        <div className="relative z-10 max-w-6xl mx-auto px-4">
+      <section id="spanish" className="w-full min-h-screen py-12 bg-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <FallingElements type="rice" />
+        </div>
+        {/* <SectionAudio section="spanish" /> */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 w-full">
           <motion.article 
             className="text-center max-w-4xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
@@ -441,10 +432,12 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* Indian Wedding Section */}
-      <section id="indian" className="min-h-screen py-12 bg-stone-50 relative">
-        <FallingElements type="marigold" />
-        <SectionAudio section="indian" />
-        <div className="relative z-10 max-w-6xl mx-auto px-4">
+      <section id="indian" className="w-full min-h-screen py-12 bg-stone-50 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <FallingElements type="marigold" />
+        </div>
+        {/* <SectionAudio section="indian" /> */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 w-full">
           <motion.article 
             className="text-center max-w-4xl mx-auto mb-8"
             initial={{ opacity: 0, y: 50 }}
@@ -491,8 +484,8 @@ const Page = ({ params: { lang } }: PageProps) => {
       </section>
 
       {/* RSVP Section */}
-      <section id="rsvp" className="min-h-screen py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <section id="rsvp" className="w-full min-h-screen py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}

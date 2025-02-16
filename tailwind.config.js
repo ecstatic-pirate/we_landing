@@ -13,11 +13,8 @@ module.exports = {
       },
       colors: {
         navy: '#1B365D',
-        sand: '#F9F6F0',
-        'newspaper-bg': 'var(--newspaper-bg)',
-        'newspaper-text': 'var(--newspaper-text)',
-        'newspaper-accent': 'var(--newspaper-accent)',
-        'cream-100': '#f4f1ea',
+        sand: '#000000',
+        'cream-100': '#000000',
       },
     },
   },

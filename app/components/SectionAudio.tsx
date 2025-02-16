@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Music, VolumeX } from 'lucide-react';
 import { useInView } from 'framer-motion';
 
 interface SectionAudioProps {
@@ -195,7 +194,7 @@ const SectionAudio = ({ section }: SectionAudioProps) => {
   };
 
   return (
-    <div ref={containerRef} className="fixed bottom-8 right-8 z-50">
+    <div ref={containerRef} className="fixed bottom-8 right-8 z-50 max-w-[calc(100vw-2rem)]">
       <div 
         id={`youtube-player-${section}`} 
         className="absolute"
@@ -204,15 +203,15 @@ const SectionAudio = ({ section }: SectionAudioProps) => {
       
       <button
         onClick={toggleMusic}
-        className="bg-white/80 backdrop-blur-sm p-4 rounded-full shadow-lg hover:bg-white transition-colors disabled:opacity-50"
+        className="bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg hover:bg-white transition-colors disabled:opacity-50 font-serif text-base whitespace-nowrap"
         aria-label={isPlaying ? 'Stop music' : 'Play music'}
         disabled={!isReady}
       >
-        {isPlaying ? <VolumeX className="w-6 h-6" /> : <Music className="w-6 h-6" />}
+        {isPlaying ? 'Pause' : 'Play'}
       </button>
 
       {error && (
-        <div className="absolute bottom-16 right-0 bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm">
+        <div className="absolute bottom-16 right-0 bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm max-w-[200px] break-words">
           {error}
         </div>
       )}
