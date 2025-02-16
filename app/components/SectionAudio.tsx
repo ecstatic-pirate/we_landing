@@ -11,9 +11,11 @@ declare global {
 let apiLoaded = false;
 
 const SectionAudio = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
   const playerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Indian music track
   const videoId = 'TXuJcO5G6TA';
@@ -25,6 +27,11 @@ const SectionAudio = () => {
       if (!isMounted) return;
       
       try {
+        if (!document.getElementById('youtube-player')) {
+          console.error('Player element not found');
+          return;
+        }
+
         playerRef.current = new window.YT.Player('youtube-player', {
           height: '1',
           width: '1',
@@ -36,55 +43,57 @@ const SectionAudio = () => {
             fs: 0,
             rel: 0,
             modestbranding: 1,
+            mute: 0,
             playsinline: 1,
             origin: window.location.origin,
             enablejsapi: 1,
             loop: 1,
-            playlist: videoId,
-            mute: 0
+            playlist: videoId
           },
           events: {
             onReady: (event: any) => {
               if (!isMounted) return;
-              console.log('Player ready');
               setIsReady(true);
+              // Try to play immediately
               try {
+                event.target.unMute();
+                event.target.setVolume(100);
                 event.target.playVideo();
-                setIsPlaying(true);
               } catch (err) {
                 console.error('Error in onReady:', err);
-                setIsPlaying(false);
               }
             },
             onStateChange: (event: any) => {
               if (!isMounted) return;
-              console.log('Player state changed:', event.data);
               
-              switch (event.data) {
-                case window.YT.PlayerState.PLAYING:
-                  console.log('Video is now playing');
-                  setIsPlaying(true);
-                  break;
-                case window.YT.PlayerState.PAUSED:
-                case window.YT.PlayerState.ENDED:
-                case window.YT.PlayerState.UNSTARTED:
-                  console.log('Video is now paused/ended/unstarted');
-                  setIsPlaying(false);
-                  if (event.data === window.YT.PlayerState.UNSTARTED) {
-                    event.target.playVideo();
-                  }
-                  break;
+              try {
+                switch (event.data) {
+                  case window.YT.PlayerState.PLAYING:
+                    event.target.unMute();
+                    event.target.setVolume(100);
+                    setIsPlaying(true);
+                    break;
+                  case window.YT.PlayerState.ENDED:
+                  case window.YT.PlayerState.PAUSED:
+                    setIsPlaying(false);
+                    break;
+                }
+              } catch (err) {
+                console.error('Error in onStateChange:', err);
               }
             },
-            onError: (event: any) => {
-              console.error('YouTube player error:', event.data);
-              setIsPlaying(false);
+            onError: (error: any) => {
+              if (!isMounted) return;
+              console.error('YouTube player error:', error);
+              setError('Unable to load audio');
             }
           }
         });
       } catch (err) {
         console.error('Error initializing YouTube player:', err);
-        setIsPlaying(false);
+        if (isMounted) {
+          setError('Unable to initialize audio player');
+        }
       }
     };
 
@@ -95,7 +104,6 @@ const SectionAudio = () => {
       firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
 
       window.onYouTubeIframeAPIReady = () => {
-        console.log('YouTube API ready');
         apiLoaded = true;
         initializePlayer();
       };
@@ -116,25 +124,24 @@ const SectionAudio = () => {
   }, [videoId]);
 
   const toggleMusic = () => {
-    if (!playerRef.current || !isReady) {
-      console.log('Player not ready for toggle');
-      return;
-    }
+    if (!playerRef.current || !isReady) return;
 
-    console.log('Toggling music, current state:', isPlaying);
     try {
       if (isPlaying) {
         playerRef.current.pauseVideo();
       } else {
+        playerRef.current.unMute();
+        playerRef.current.setVolume(100);
         playerRef.current.playVideo();
       }
     } catch (err) {
-      console.error('Error toggling music:', err);
+      console.error('Error controlling YouTube player:', err);
+      setError('Unable to control audio playback');
     }
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div ref={containerRef} className="fixed bottom-8 right-8 z-50 max-w-[calc(100vw-2rem)] flex gap-2">
       <div 
         id="youtube-player" 
         className="absolute"
@@ -150,6 +157,12 @@ const SectionAudio = () => {
         <Music className={`w-4 h-4 ${!isPlaying && isReady ? 'animate-bounce' : ''}`} />
         {isPlaying ? 'PAUSE' : 'PLAY'}
       </button>
+
+      {error && error !== 'Unable to control volume' && (
+        <div className="absolute bottom-16 right-0 bg-red-100 text-red-600 px-4 py-2 rounded-lg text-sm max-w-[200px] break-words">
+          {error}
+        </div>
+      )}
     </div>
   );
 };

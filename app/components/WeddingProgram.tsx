@@ -1,7 +1,31 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Heart, Utensils, Camera, Cake, Music, Coffee, Sun, Moon } from 'lucide-react';
+import {
+  DiamondsFour,
+  Church,
+  Wine,
+  Bus,
+  Confetti,
+  MusicNotes,
+  ForkKnife,
+  Moon,
+  Cake,
+  Heart,
+  Sun,
+  Flower,
+  HandsClapping,
+  IconProps,
+  IconWeight,
+  Champagne,
+  DoorOpen,
+  FireSimple,
+  Microphone,
+  Users,
+  PaintBrush,
+  Bandaids,
+  Horse
+} from "@phosphor-icons/react";
 
 export interface ProgramEvent {
   time: string;
@@ -13,7 +37,7 @@ export interface ProgramEvent {
     en: string;
     es: string;
   };
-  icon: "ceremony" | "dinner" | "photos" | "cake" | "party" | "night" | "day" | "breakfast";
+  icon: string;
 }
 
 interface WeddingProgramProps {
@@ -23,15 +47,66 @@ interface WeddingProgramProps {
   lang?: 'en' | 'es';
 }
 
-const icons = {
-  ceremony: Heart,
-  dinner: Utensils,
-  photos: Camera,
-  cake: Cake,
-  party: Music,
-  breakfast: Coffee,
-  day: Sun,
-  night: Moon,
+const getIcon = (iconName: string, color: string) => {
+  const iconProps: IconProps = { 
+    size: 32,
+    color: color,
+    weight: "duotone" as IconWeight
+  };
+  
+  switch (iconName) {
+    // Ceremony related
+    case 'ceremony':
+      return <DiamondsFour {...iconProps} />; // Main wedding ceremony
+    case 'civil':
+      return <Church {...iconProps} />; // Civil ceremony
+    case 'ritual':
+      return <FireSimple {...iconProps} />; // Indian rituals like Haldi, Ganesh Puja
+      
+    // Food and drinks related
+    case 'dinner':
+      return <ForkKnife {...iconProps} />; // Main meals
+    case 'drinks':
+      return <Wine {...iconProps} />; // Welcome drinks and cocktails
+    case 'cake':
+      return <Cake {...iconProps} />; // Late night snacks
+      
+    // Entertainment related
+    case 'party':
+      return <Confetti {...iconProps} />; // General celebrations
+    case 'music':
+      return <MusicNotes {...iconProps} />; // Live band & first dance
+    case 'garba':
+      return <Users {...iconProps} />; // Garba dance (group dance)
+    case 'sangeet':
+      return <Microphone {...iconProps} />; // Sangeet performances
+    case 'baraat':
+      return <Horse {...iconProps} />; // Baraat procession
+      
+    // Time related
+    case 'day':
+      return <Sun {...iconProps} />; // Daytime events
+    case 'night':
+      return <Moon {...iconProps} />; // Night events
+      
+    // Transportation
+    case 'transport':
+      return <Bus {...iconProps} />; // Bus transfers
+      
+    // Decoration and preparation
+    case 'decoration':
+      return <PaintBrush {...iconProps} />; // Mehndi and decoration events
+    case 'welcome':
+      return <DoorOpen {...iconProps} />; // Welcome events
+    case 'gathering':
+      return <Users {...iconProps} />; // Group events
+      
+    // Default and special cases
+    case 'love':
+      return <Heart {...iconProps} />;
+    default:
+      return <Flower {...iconProps} />;
+  }
 };
 
 const themeColors = {
@@ -78,7 +153,6 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
         {/* Events */}
         <div className="relative space-y-24">
           {events.map((event, index) => {
-            const Icon = icons[event.icon];
             const isLeft = index % 2 === 0;
 
             return (
@@ -106,7 +180,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <Icon className={`w-8 h-8 ${colors.icon.text}`} />
+                    {getIcon(event.icon, colors.icon.text.replace('text-', ''))}
                   </motion.div>
                 </div>
 

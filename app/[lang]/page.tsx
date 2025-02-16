@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion } from 'framer-motion';
@@ -7,7 +8,10 @@ import ConceptNavigation from '../components/ConceptNavigation';
 import WeddingProgram from '../components/WeddingProgram';
 import { ProgramEvent } from '../components/WeddingProgram';
 import FallingElements from '../components/FallingElements';
-// import SectionAudio from '../components/SectionAudio';
+import SectionAudio from '../components/SectionAudio';
+import dynamic from 'next/dynamic';
+
+const YouTubeBackground = dynamic(() => import('../components/YouTubeBackground'), { ssr: false });
 
 interface PageProps {
   params: {
@@ -150,7 +154,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Traditional ceremony seeking Lord Ganesh's blessings for a successful wedding celebration",
       es: "Ceremonia tradicional pidiendo las bendiciones del Señor Ganesh para una celebración exitosa"
     },
-    icon: "ceremony"
+    icon: "ritual"
   },
   {
     time: "August 30th - 13:00",
@@ -174,7 +178,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Traditional rituals followed by intricate henna application for the bride and guests",
       es: "Rituales tradicionales seguidos de la aplicación de henna para la novia e invitados"
     },
-    icon: "party"
+    icon: "decoration"
   },
   {
     time: "August 30th - 16:00",
@@ -186,7 +190,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Traditional Gujarati folk dance celebration",
       es: "Celebración de danza folclórica tradicional Gujarati"
     },
-    icon: "party"
+    icon: "garba"
   },
   {
     time: "August 30th - 18:30",
@@ -198,7 +202,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Musical evening with performances by family and friends",
       es: "Noche musical con actuaciones de familiares y amigos"
     },
-    icon: "night"
+    icon: "sangeet"
   },
   {
     time: "August 30th - 22:30",
@@ -222,7 +226,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Celebration continues with music and dancing",
       es: "La celebración continúa con música y baile"
     },
-    icon: "night"
+    icon: "party"
   },
   // Day 2 Events
   {
@@ -235,7 +239,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Traditional ceremony where turmeric paste is applied to the bride and groom",
       es: "Ceremonia tradicional donde se aplica pasta de cúrcuma a los novios"
     },
-    icon: "day"
+    icon: "ritual"
   },
   {
     time: "August 31st - 13:00",
@@ -259,7 +263,7 @@ const indianProgram: ProgramEvent[] = [
       en: "Groom's wedding procession with music and dancing",
       es: "Procesión nupcial del novio con música y baile"
     },
-    icon: "party"
+    icon: "baraat"
   },
   {
     time: "August 31st - 18:00",
@@ -329,6 +333,7 @@ const Page = ({ params: { lang } }: PageProps) => {
 
   return (
     <main className="relative w-full overflow-hidden">
+      <SectionAudio />
       {/* Navigation Container - adjusted z-index */}
       <div className="fixed top-0 left-0 right-0 z-40 w-full">
         <ConceptNavigation />
@@ -336,16 +341,9 @@ const Page = ({ params: { lang } }: PageProps) => {
       
       {/* Hero Section - added overflow-hidden */}
       <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black overflow-hidden">
-        {/* Background Image Container */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/mountain.jpg"
-            alt="Wedding background"
-            fill
-            sizes="100%"
-            className="object-cover  object-[center_15%] brightness-50"
-            priority
-          />
+        {/* Video Background Container */}
+        <div className="absolute inset-0 w-full h-full">
+          <YouTubeBackground videoId="wmsWZjUZh5I" />
         </div>
 
         {/* Content Container - adjusted max-width and padding */}
