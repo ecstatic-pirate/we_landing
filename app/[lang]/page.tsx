@@ -382,7 +382,7 @@ const Page = ({ params: { lang } }: PageProps) => {
       {/* Spanish Wedding Section */}
       <section id="spanish" className="w-full min-h-screen py-12 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <FallingElements type="rice" />
+          <FallingElements type="confetti" />
         </div>
         {/* <SectionAudio section="spanish" /> */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 w-full">

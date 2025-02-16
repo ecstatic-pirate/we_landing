@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface FallingElementsProps {
-  type: 'rice' | 'marigold';
+  type: 'confetti' | 'marigold';
 }
 
 const FallingElements = ({ type }: FallingElementsProps) => {
@@ -16,21 +16,80 @@ const FallingElements = ({ type }: FallingElementsProps) => {
     rotation: number;
     scale: number;
     swayAmount: number;
+    color?: string;
+    shape?: 'circle' | 'square' | 'triangle';
   }>>([]);
 
   useEffect(() => {
     // Create elements with more random properties
-    const newElements = Array.from({ length: type === 'rice' ? 200 : 100 }, (_, index) => ({
-      id: index,
-      x: Math.random() * 100,
-      delay: Math.random() * 5,
-      duration: 6 + Math.random() * 5,
-      rotation: Math.random() * 360,
-      scale: type === 'rice' ? 0.5 + Math.random() * 0.2 : 0.3 + Math.random() * 0.2,
-      swayAmount: Math.random() * 100,
-    }));
+    const newElements = Array.from({ length: type === 'confetti' ? 200 : 100 }, (_, index) => {
+      const colors = [
+        'rgb(214, 0, 28)',    // Spanish red
+        'rgb(255, 196, 0)',   // Spanish yellow
+        'rgb(255, 87, 51)',   // Warm orange
+        'rgb(255, 150, 0)',   // Golden
+      ];
+      const shapes = ['circle', 'square', 'triangle'] as const;
+      
+      return {
+        id: index,
+        x: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 8 + Math.random() * 6,
+        rotation: Math.random() * 360,
+        scale: type === 'confetti' ? 0.4 + Math.random() * 0.3 : 0.3 + Math.random() * 0.2,
+        swayAmount: Math.random() * 100,
+        color: type === 'confetti' ? colors[Math.floor(Math.random() * colors.length)] : undefined,
+        shape: type === 'confetti' ? shapes[Math.floor(Math.random() * shapes.length)] : undefined,
+      };
+    });
     setElements(newElements);
   }, [type]);
+
+  const renderConfetti = (color: string, shape: 'circle' | 'square' | 'triangle') => {
+    switch (shape) {
+      case 'circle':
+        return (
+          <div 
+            className="absolute"
+            style={{
+              width: '8px',
+              height: '8px',
+              background: color,
+              borderRadius: '50%',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            }}
+          />
+        );
+      case 'square':
+        return (
+          <div 
+            className="absolute"
+            style={{
+              width: '8px',
+              height: '8px',
+              background: color,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              transform: 'rotate(15deg)',
+            }}
+          />
+        );
+      case 'triangle':
+        return (
+          <div 
+            className="absolute"
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: '5px solid transparent',
+              borderRight: '5px solid transparent',
+              borderBottom: `10px solid ${color}`,
+              filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.1))',
+            }}
+          />
+        );
+    }
+  };
 
   return (
     <div 
@@ -61,27 +120,8 @@ const FallingElements = ({ type }: FallingElementsProps) => {
             ease: [0.4, 0, 0.6, 1],
           }}
         >
-          {type === 'rice' ? (
-            // Rice grain - more realistic with curved shape and gradient
-            <div className="relative">
-              <div 
-                className="h-3 w-[3px] rounded-full"
-                style={{
-                  background: 'linear-gradient(90deg, #FFF8E1 0%, #FFECB3 50%, #FFE082 100%)',
-                  transform: 'rotate(45deg)',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-                  position: 'relative',
-                }}
-              >
-                <div 
-                  className="absolute w-full h-full"
-                  style={{
-                    background: 'linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%)',
-                    transform: 'rotate(-45deg)',
-                  }}
-                />
-              </div>
-            </div>
+          {type === 'confetti' ? (
+            element.color && element.shape && renderConfetti(element.color, element.shape)
           ) : (
             // Marigold flower - more realistic with multiple layers and better colors
             <div className="relative">
