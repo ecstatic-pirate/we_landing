@@ -171,7 +171,7 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
             return (
               <motion.div
                 key={event.time.en}
-                className={`flex items-center gap-8 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
+                className={`flex items-center gap-2 md:gap-4 ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
                 initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -179,10 +179,10 @@ const WeddingProgram = ({ events, title, theme, lang = 'en' }: WeddingProgramPro
               >
                 {/* Content */}
                 <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'}`}>
-                  <div className={`space-y-3 ${isLeft ? 'pr-8' : 'pl-8'}`}>
-                    <p className={`font-mono text-sm ${colors.time}`}>{event.time[lang]}</p>
-                    <h4 className={`font-playfair text-xl ${colors.title}`}>{event.title[lang]}</h4>
-                    <p className={`font-lora text-sm italic ${colors.description}`}>{event.description[lang]}</p>
+                  <div className={`space-y-3 ${isLeft ? 'pr-2 md:pr-4' : 'pl-2 md:pl-4'}`}>
+                    <p className={`font-mono text-xs md:text-sm ${colors.time}`}>{event.time[lang]}</p>
+                    <h4 className={`font-playfair text-lg md:text-xl ${colors.title}`}>{event.title[lang]}</h4>
+                    <p className={`font-lora text-xs md:text-sm italic ${colors.description}`}>{event.description[lang]}</p>
                   </div>
                 </div>
 

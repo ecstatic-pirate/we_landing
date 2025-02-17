@@ -67,8 +67,8 @@ const spanishProgram: ProgramEvent[] = [
   },
   {
     time: {
-      en: "July 5th - 13:00 - 02:00",
-      es: "5 de julio - 13:00 - 02:00"
+      en: "July 5th - 13:00 - 14:30",
+      es: "5 de julio - 13:00 - 14:30"
     },
     title: {
       en: "Wedding Ceremony & Celebration",
@@ -433,7 +433,7 @@ const Page = ({ params: { lang } }: PageProps) => {
       indian: {
         title: "Udaipur, India",
         coordinates: "24.5854° N, 73.7125° E",
-        description: "Udaipur se ha convertido en una parte especial de nuestra historia de amor. En nuestro primer viaje juntos a la India, nos perdimos en sus vibrantes calles, fascinados por la fusión de caos y serenidad. Ese viaje nos llevó hasta este momento, y ahora regresamos a esta ciudad mágica para celebrar nuestra boda india entre sus palacios, lagos y encanto atemporal."
+        description: "Udaipur se ha convertido en una parte especial de nuestra historia de amor. En nuestro primer viaje juntos a la India, nos perdimos por sus calles, fascinados por la fusión de caos y tranquilidad. Ese viaje nos trajo hasta este momento. Ahora, regresamos a esta ciudad mágica acompañados de nuestras familias y amigos, para celebrar nuestra boda India."
       }
     }
   };
@@ -501,8 +501,9 @@ const Page = ({ params: { lang } }: PageProps) => {
               alt={lang === 'es' ? 'Nuestra Historia' : 'Our Story'}
               fill
               className="object-contain"
-              priority
               sizes="100vw"
+              quality={100}
+              priority
             />
           </div>
         </div>
