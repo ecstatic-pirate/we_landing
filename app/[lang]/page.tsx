@@ -10,6 +10,8 @@ import FallingElements from '../components/FallingElements';
 import SectionAudio from '../components/SectionAudio';
 import ContactDetails from '../components/ContactDetails';
 import dynamic from 'next/dynamic';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { useState } from 'react';
 
 const YouTubeBackground = dynamic(() => import('../components/YouTubeBackground'), { ssr: false });
 
@@ -142,16 +144,16 @@ const spanishProgram: ProgramEvent[] = [
   },
   {
     time: {
-      en: "July 5th - 22:00",
-      es: "5 de julio - 22:00"
+      en: "July 5th - 22:30",
+      es: "5 de julio - 22:30"
     },
     title: {
       en: "Late Night Snacks",
       es: "Recena"
     },
     description: {
-      en: "Evening snacks and refreshments",
-      es: "Aperitivos nocturnos y refrescos"
+      en: "Evening snacks",
+      es: "Aperitivos nocturnos"
     },
     icon: "cake"
   },
@@ -228,8 +230,8 @@ const indianProgram: ProgramEvent[] = [
       es: "Almuerzo de Bienvenida"
     },
     description: {
-      en: "A lavish spread of traditional Indian cuisine, offering guests a taste of regional flavors and delicacies",
-      es: "Un suntuoso banquete de cocina india tradicional, ofreciendo a los invitados sabores y delicias regionales"
+      en: "Traditional Indian lunch featuring local favorites and regional specialties",
+      es: "Almuerzo tradicional indio con platos locales y especialidades regionales"
     },
     icon: "dinner"
   },
@@ -333,8 +335,8 @@ const indianProgram: ProgramEvent[] = [
       es: "Banquete Tradicional Indio"
     },
     description: {
-      en: "A sumptuous lunch featuring an assortment of Indian specialties, from fragrant biryanis to rich curries",
-      es: "Un suntuoso almuerzo con una variedad de especialidades indias, desde aromáticos biryanis hasta ricos currys"
+      en: "Traditional Indian lunch with a variety of dishes",
+      es: "Almuerzo tradicional indio con una variedad de platos"
     },
     icon: "dinner"
   },
@@ -349,7 +351,7 @@ const indianProgram: ProgramEvent[] = [
     },
     description: {
       en: "The groom arrives in style, leading a lively wedding procession with music, dancing, and celebration",
-      es: "El novio llega con estilo, liderando una animada procesión nupcial con música, baile y celebración"
+      es: "El novio llega en una animada procesión con música y baile"
     },
     icon: "baraat"
   },
@@ -378,8 +380,8 @@ const indianProgram: ProgramEvent[] = [
       es: "Cena de Recepción y Celebraciones"
     },
     description: {
-      en: "A grand post-wedding reception with fine dining, drinks, heartfelt speeches, and plenty of dancing",
-      es: "Una gran recepción post-boda con cena fina, bebidas, discursos emotivos y mucho baile"
+      en: "A post-wedding reception with fine dining, drinks, heartfelt speeches, and plenty of dancing",
+      es: "Una recepción post-boda con cena fina, bebidas, discursos emotivos y mucho baile"
     },
     icon: "party"
   },
