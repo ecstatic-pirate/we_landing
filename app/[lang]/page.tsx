@@ -267,8 +267,8 @@ const indianProgram: ProgramEvent[] = [
   },
   {
     time: {
-      en: "August 30th - 18:30",
-      es: "30 de agosto - 18:30"
+      en: "August 30th - 19:00",
+      es: "30 de agosto - 19:00"
     },
     title: {
       en: "Sangeet Night",
