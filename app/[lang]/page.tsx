@@ -159,16 +159,16 @@ const spanishProgram: ProgramEvent[] = [
   },
   {
     time: {
-      en: "July 6th - 02:00",
-      es: "6 de julio - 02:00"
+      en: "July 6th - 00:00 & 02:00",
+      es: "6 de julio - 00:00 & 02:00"
     },
     title: {
       en: "Return Bus",
       es: "Autobús de Regreso"
     },
     description: {
-      en: "Last bus departs for Segovia City Center",
-      es: "Último autobús sale hacia el Centro de Segovia"
+      en: "Buses depart at 00:00 and 02:00 to Segovia City Center",
+      es: "Un autobús saldrá sobre las 00:00 y otro sobre las 02:00 hacia el Centro de Segovia"
     },
     icon: "night"
   }
@@ -286,12 +286,12 @@ const indianProgram: ProgramEvent[] = [
       es: "30 de agosto - 22:30"
     },
     title: {
-      en: "Dinner Under the Stars",
-      es: "Cena Bajo las Estrellas"
+      en: "Traditional Indian Dinner",
+      es: "Cena Tradicional India"
     },
     description: {
-      en: "A grand buffet featuring a selection of traditional Indian dishes from across India",
-      es: "Un gran buffet con una selección de platos tradicionales indios de toda la India"
+      en: "A grand buffet with dishes from across India",
+      es: "Un gran buffet con platos de diferentes regiones de la India."
     },
     icon: "dinner"
   },
@@ -305,8 +305,8 @@ const indianProgram: ProgramEvent[] = [
       es: "Fiesta"
     },
     description: {
-      en: "The celebration continues late into the night with music, dancing, and cocktails under the starlit sky",
-      es: "La celebración continúa hasta altas horas de la noche con música, baile y cócteles bajo el cielo estrellado"
+      en: "The celebration continues with DJ until everyone is on the dance floor",
+      es: "La celebración continúa con DJ hasta donde cada cuerpo aguante"
     },
     icon: "party"
   },
@@ -321,7 +321,7 @@ const indianProgram: ProgramEvent[] = [
     },
     description: {
       en: "A joyful ritual where turmeric paste is applied to the bride and groom by family and friends for purification and natural glow",
-      es: "Un alegre ritual donde la pasta de cúrcuma es aplicada a los novios por familiares y amigos"
+      es: "Un ritual en el que familiares y amigos echan a los novios cúrcuma y flores"
     },
     icon: "ritual"
   },
